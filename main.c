@@ -12,12 +12,15 @@
 #include "bigO.c"
 #include "welcome.c"
 
+
+
 UINT8 GAME_BOARD[9];
 void init();
+void init2();
 void checkInput();
 void updateSwitches();
 void checkPositionO();
-void checkPositionX();
+void checkPosition();
 
 // The player array will hold the player's position as X ([0]) and Y ([1])
 UINT8 player[2];
@@ -38,7 +41,8 @@ enum chess
 	gg,
 	hh,
 	ii,
-	jj
+	jj,
+	kk
 	};
 
 
@@ -61,23 +65,15 @@ void main() {
 void init() {
 	
 	DISPLAY_ON;						// Turn on the display
-	
-	
-	// Use the 'helloWorld' array to write background tiles starting at 0,6 (tile positions)
-	//  and write for 10 tiles in width and 2 tiles in height
-	
+		
 	set_bkg_data(0, 64, alpha);		// Load 47 tiles into background memory
-	// Load the the 'sprites' tiles into sprite memory
 	
-	
-	// Set the first movable sprite (0) to be the first tile in the sprite memory (0)
 	set_bkg_tiles(0,0,20,18,welcome);
-	
-	
-	
-	
+		
+		
+		
 	round[0] = 0;
-	
+	count[0] = kk;
 	count[1] = cc;
 	count[2] = dd;
 	count[3] = ee;
@@ -93,6 +89,8 @@ void init() {
 	
 }
 
+
+
 void updateSwitches() {
 	
 	HIDE_WIN;
@@ -105,8 +103,6 @@ void checkInput() {
 
     if (joypad() & J_B) {
 		
-		// Use the 'blankScreen' array to write background tiles starting at 0,0 (tile positions)
-		//  and for 20 tiles in width and 18 tiles in height
 		if(round[0]==0)
 		{
 			set_bkg_tiles(0,0,20,18,lineMap);
@@ -118,7 +114,7 @@ void checkInput() {
 		}
 		
 		
-		checkPositionX();
+		checkPosition();
         delay(400);
     }
 	
@@ -156,131 +152,191 @@ void checkInput() {
 
 }
 
-void checkPositionX() {
+void checkPosition() {
 
 	
 	if(player[0]<56 && player[1]<66)
 		{
-			if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+			if(count[0]!=0 && count[0]!=1)
+				{
+					if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+					{
+					set_bkg_tiles(1,2,4,4,bigX);
+					count[0] = aa;
+					}
+					else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
+					{
+					set_bkg_tiles(1,1,4,5,bigO);
+					count[0] = bb;
+					}
+				}
+			else
 			{
-			set_bkg_tiles(1,2,4,4,bigX);
-			count[0] = aa;
-			}
-			else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
-			{
-			set_bkg_tiles(1,1,4,5,bigO);
-			count[0] = bb;
+				round[0]--;
 			}
 		}
 	else if(player[0]>56 && player[0]<113 && player[1]<66)
 		{
-			if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
-			{
-			set_bkg_tiles(8,2,4,4,bigX);
-			count[1] = aa;
-			}
-			else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
-			{
-			set_bkg_tiles(8,1,4,5,bigO);
-			count[1] = bb;
-			}
+			if(count[1]!=0 && count[1]!=1)
+				{
+					if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+					{
+					set_bkg_tiles(8,2,4,4,bigX);
+					count[1] = aa;
+					}
+					else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
+					{
+					set_bkg_tiles(8,1,4,5,bigO);
+					count[1] = bb;
+					}
+				}
+				else
+				{
+					round[0]--;
+				}
         
 		}
 	else if(player[0]>113 && player[1]<66)
 		{
-			if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+			if(count[2]!=0 && count[2]!=1)
+				{
+					if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+					{
+					set_bkg_tiles(15,2,4,4,bigX);
+					count[2] = aa;
+					}
+					else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
+					{
+					set_bkg_tiles(15,1,4,5,bigO);
+					count[2] = bb;
+					}
+				}
+			else
 			{
-			set_bkg_tiles(15,2,4,4,bigX);
-			count[2] = aa;
-			}
-			else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
-			{
-			set_bkg_tiles(15,1,4,5,bigO);
-			count[2] = bb;
+				round[0]--;
 			}
         
 		}
 	else if(player[0]<56 && player[1]>66 && player[1]<114)
 		{
-			if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+			if(count[3]!=0 && count[3]!=1)
+				{
+					if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+					{
+					set_bkg_tiles(1,7,4,4,bigX);
+					count[3] = aa;
+					}
+					else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
+					{
+					set_bkg_tiles(1,7,4,5,bigO);
+					count[3] = bb;
+					}
+				}
+			else
 			{
-			set_bkg_tiles(1,7,4,4,bigX);
-			count[3] = aa;
+				round[0]--;
 			}
-			else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
-			{
-			set_bkg_tiles(1,7,4,5,bigO);
-			count[3] = bb;
-			}
-        
 		}
 	else if(player[0]>56 && player[0]<113 && player[1]>66 && player[1]<114)
 		{
-			if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+			if(count[4]!=0 && count[4]!=1)
+				{
+					if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+					{
+					set_bkg_tiles(8,7,4,4,bigX);
+					count[4] = aa;
+					}
+					else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
+					{
+					set_bkg_tiles(8,7,4,5,bigO);
+					count[4] = bb;
+					}
+				}
+			else
 			{
-			set_bkg_tiles(8,7,4,4,bigX);
-			count[4] = aa;
+				round[0]--;
 			}
-			else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
-			{
-			set_bkg_tiles(8,7,4,5,bigO);
-			count[4] = bb;
-			}
-        
 		}
 	else if(player[0]>113 && player[1]>66 && player[1]<114)
 		{
-			if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+			if(count[5]!=0 && count[5]!=1)
+				{
+					if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+					{
+					set_bkg_tiles(15,7,4,4,bigX);
+					count[5] = aa;
+					}
+					else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
+					{
+					set_bkg_tiles(15,7,4,5,bigO);
+					count[5] = bb;
+					}
+				}
+			else
 			{
-			set_bkg_tiles(15,7,4,4,bigX);
-			count[5] = aa;
-			}
-			else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
-			{
-			set_bkg_tiles(15,7,4,5,bigO);
-			count[5] = bb;
-			}
-        
+				round[0]--;
+			}     
 		}
 	else if(player[0]<56 && player[1]>114)
 		{
-			if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+			if(count[6]!=0 && count[6]!=1)
+				{
+					if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+					{
+					set_bkg_tiles(1,13,4,4,bigX);
+					count[6] = aa;
+					}
+					else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
+					{
+					set_bkg_tiles(1,13,4,5,bigO);
+					count[6] = bb;
+					}
+				}
+			else
 			{
-			set_bkg_tiles(1,13,4,4,bigX);
-			count[6] = aa;
-			}
-			else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
-			{
-			set_bkg_tiles(1,13,4,5,bigO);
-			count[6] = bb;
+				round[0]--;
 			}
         
 		}
 	else if(player[0]>56 && player[0]<113 && player[1]>114)
 		{
-			if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+			if(count[7]!=0 && count[7]!=1)
+				{
+					if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+					{
+					set_bkg_tiles(8,13,4,4,bigX);
+					count[7] = aa;
+					}
+					else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
+					{
+					set_bkg_tiles(8,13,4,5,bigO);
+					count[7] = bb;
+					}
+				}
+			else
 			{
-			set_bkg_tiles(8,13,4,4,bigX);
-			count[7] = aa;
-			}
-			else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
-			{
-			set_bkg_tiles(8,13,4,5,bigO);
-			count[7] = bb;
+				round[0]--;
 			}
         
 		}
 	else if(player[0]>113 && player[1]>114)
 		{
-			if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+			if(count[8]!=0 && count[8]!=1)
+				{
+					if(round[0]==1 ||round[0]==3 ||round[0]==5 ||round[0]==7 ||round[0]==9)
+					{
+					set_bkg_tiles(15,13,4,4,bigX);
+					count[8] = aa;
+					}
+					else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
+					{
+					set_bkg_tiles(15,13,4,5,bigO);
+					count[8] = bb;
+					}
+				}
+			else
 			{
-			set_bkg_tiles(15,13,4,4,bigX);
-			count[8] = aa;
-			}
-			else if(round[0]==2 ||round[0]==4 ||round[0]==6 ||round[0]==8)
-			{
-			set_bkg_tiles(15,13,4,5,bigO);
-			count[8] = bb;
+				round[0]--;
 			}
         
 		}
@@ -294,12 +350,16 @@ void checkPositionX() {
 				set_sprite_data(0, 1, X);
 		}
 		
+		
+	round[0] = round[0]+1;
+		
+		
 	if(
 		   (count[0]==count[1] && count[1]==count[2] && count[0] == aa) ||
 		   (count[3]==count[4] && count[4]==count[5] && count[3] == aa) ||
 		   (count[6]==count[7] && count[7]==count[8] && count[6] == aa) ||
 		   (count[0]==count[4] && count[4]==count[8] && count[0] == aa) ||
-		   (count[2]==count[4] && count[4]==count[5] && count[2] == aa) ||
+		   (count[2]==count[4] && count[4]==count[6] && count[2] == aa) ||
 		   (count[0]==count[3] && count[3]==count[6] && count[0] == aa) ||
 		   (count[1]==count[4] && count[4]==count[7] && count[1] == aa) ||
 		   (count[2]==count[5] && count[5]==count[8] && count[2] == aa)
@@ -307,14 +367,15 @@ void checkPositionX() {
 		  {
 			 set_bkg_tiles(0,0,20,18,blankScreen);
 			 printf("     %s\n",str);
-			 delay(9999999999999999999999999999999);
+			 delay(3000);
+			 init();
 		  }
-		  else if(
+	else if(
 		   (count[0]==count[1] && count[1]==count[2] && count[0] == bb) ||
 		   (count[3]==count[4] && count[4]==count[5] && count[3] == bb) ||
 		   (count[6]==count[7] && count[7]==count[8] && count[6] == bb) ||
 		   (count[0]==count[4] && count[4]==count[8] && count[0] == bb) ||
-		   (count[2]==count[4] && count[4]==count[5] && count[2] == bb) ||
+		   (count[2]==count[4] && count[4]==count[6] && count[2] == bb) ||
 		   (count[0]==count[3] && count[3]==count[6] && count[0] == bb) ||
 		   (count[1]==count[4] && count[4]==count[7] && count[1] == bb) ||
 		   (count[2]==count[5] && count[5]==count[8] && count[2] == bb)
@@ -322,13 +383,17 @@ void checkPositionX() {
 		  {
 			 set_bkg_tiles(0,0,20,18,blankScreen);
 			 printf("     %s\n",str1);
-			 delay(9999999999999999999999999999999);
+			 delay(3000);
+			init();
 		  }
-		  else if(round[0]==9)
+	else if(round[0]==9)
 		  {
-			  printf("     %s\n",str2);
+			 printf("     %s\n",str2);
+			 delay(3000);
+			 init(); 
 		  }
-	round[0] = round[0]+1;
+		  
+	
 }
 		
 	
